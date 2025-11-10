@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -270,14 +270,19 @@ export default function Auth() {
                   </Button>
                 </form>
 
-                <Alert className="mt-4 bg-primary/10 border-primary/20">
-                  <AlertCircle className="h-4 w-4 text-primary" />
-                  <AlertDescription className="text-sm text-foreground">
-                    <strong>Default Admin:</strong><br />
-                    Email: alphonsarckal9502@gmail.com<br />
-                    Password: 12345678
-                  </AlertDescription>
-                </Alert>
+                <div className="mt-4 space-y-3">
+                  <Alert className="bg-primary/10 border-primary/20">
+                    <AlertCircle className="h-4 w-4 text-primary" />
+                    <AlertDescription className="text-sm text-foreground">
+                      Need to create an admin account?
+                    </AlertDescription>
+                  </Alert>
+                  <Link to="/admin-signup">
+                    <Button variant="outline" className="w-full">
+                      Create Admin Account
+                    </Button>
+                  </Link>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
