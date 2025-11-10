@@ -108,9 +108,11 @@ export default function Auth() {
     }
   };
 
+  const [userType, setUserType] = useState<"student" | "admin">("student");
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 via-background to-accent/5 p-4">
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-5xl">
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-2xl mb-4">
             <Building2 className="w-8 h-8 text-primary-foreground" />
@@ -119,39 +121,143 @@ export default function Auth() {
           <p className="text-muted-foreground">Complaint Portal</p>
         </div>
 
-        <Card className="shadow-lg">
-          <CardHeader>
-            <CardTitle>{isLogin ? "Login" : "Sign Up"}</CardTitle>
-            <CardDescription>
-              {isLogin 
-                ? "Enter your credentials to access your dashboard" 
-                : "Create a new student account"}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Tabs value={isLogin ? "login" : "signup"} onValueChange={(v) => setIsLogin(v === "login")}>
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="login">Login</TabsTrigger>
-                <TabsTrigger value="signup">Sign Up</TabsTrigger>
-              </TabsList>
+        <Tabs value={userType} onValueChange={(v) => setUserType(v as "student" | "admin")} className="w-full">
+          <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-6">
+            <TabsTrigger value="student">Student Access</TabsTrigger>
+            <TabsTrigger value="admin">Admin Access</TabsTrigger>
+          </TabsList>
 
-              <TabsContent value="login">
+          {/* Student Section */}
+          <TabsContent value="student">
+            <Card className="shadow-lg max-w-md mx-auto">
+              <CardHeader>
+                <CardTitle>{isLogin ? "Student Login" : "Student Sign Up"}</CardTitle>
+                <CardDescription>
+                  {isLogin 
+                    ? "Enter your credentials to access your dashboard" 
+                    : "Create a new student account"}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Tabs value={isLogin ? "login" : "signup"} onValueChange={(v) => setIsLogin(v === "login")}>
+                  <TabsList className="grid w-full grid-cols-2">
+                    <TabsTrigger value="login">Login</TabsTrigger>
+                    <TabsTrigger value="signup">Sign Up</TabsTrigger>
+                  </TabsList>
+
+                  <TabsContent value="login">
+                    <form onSubmit={handleLogin} className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="student-login-email">Email</Label>
+                        <Input
+                          id="student-login-email"
+                          type="email"
+                          placeholder="your.email@example.com"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          required
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="student-login-password">Password</Label>
+                        <Input
+                          id="student-login-password"
+                          type="password"
+                          placeholder="••••••••"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          required
+                        />
+                      </div>
+                      <Button type="submit" className="w-full" disabled={loading}>
+                        {loading ? "Logging in..." : "Student Login"}
+                      </Button>
+                    </form>
+                  </TabsContent>
+
+                  <TabsContent value="signup">
+                    <form onSubmit={handleSignup} className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="signup-name">Full Name</Label>
+                        <Input
+                          id="signup-name"
+                          type="text"
+                          placeholder="John Doe"
+                          value={fullName}
+                          onChange={(e) => setFullName(e.target.value)}
+                          required
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="signup-email">Email</Label>
+                        <Input
+                          id="signup-email"
+                          type="email"
+                          placeholder="your.email@example.com"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          required
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="signup-roll">Roll Number</Label>
+                        <Input
+                          id="signup-roll"
+                          type="text"
+                          placeholder="2025001"
+                          value={rollNumber}
+                          onChange={(e) => setRollNumber(e.target.value)}
+                          required
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="signup-password">Password</Label>
+                        <Input
+                          id="signup-password"
+                          type="password"
+                          placeholder="••••••••"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          required
+                          minLength={8}
+                        />
+                      </div>
+                      <Button type="submit" className="w-full" disabled={loading}>
+                        {loading ? "Creating account..." : "Sign Up"}
+                      </Button>
+                    </form>
+                  </TabsContent>
+                </Tabs>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Admin Section */}
+          <TabsContent value="admin">
+            <Card className="shadow-lg max-w-md mx-auto">
+              <CardHeader>
+                <CardTitle>Admin Login</CardTitle>
+                <CardDescription>
+                  Enter admin credentials to access the admin dashboard
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
                 <form onSubmit={handleLogin} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="login-email">Email</Label>
+                    <Label htmlFor="admin-login-email">Admin Email</Label>
                     <Input
-                      id="login-email"
+                      id="admin-login-email"
                       type="email"
-                      placeholder="your.email@example.com"
+                      placeholder="admin@example.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="login-password">Password</Label>
+                    <Label htmlFor="admin-login-password">Password</Label>
                     <Input
-                      id="login-password"
+                      id="admin-login-password"
                       type="password"
                       placeholder="••••••••"
                       value={password}
@@ -160,75 +266,22 @@ export default function Auth() {
                     />
                   </div>
                   <Button type="submit" className="w-full" disabled={loading}>
-                    {loading ? "Logging in..." : "Login"}
+                    {loading ? "Logging in..." : "Admin Login"}
                   </Button>
                 </form>
-              </TabsContent>
 
-              <TabsContent value="signup">
-                <form onSubmit={handleSignup} className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="signup-name">Full Name</Label>
-                    <Input
-                      id="signup-name"
-                      type="text"
-                      placeholder="John Doe"
-                      value={fullName}
-                      onChange={(e) => setFullName(e.target.value)}
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="signup-email">Email</Label>
-                    <Input
-                      id="signup-email"
-                      type="email"
-                      placeholder="your.email@example.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="signup-roll">Roll Number</Label>
-                    <Input
-                      id="signup-roll"
-                      type="text"
-                      placeholder="2025001"
-                      value={rollNumber}
-                      onChange={(e) => setRollNumber(e.target.value)}
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="signup-password">Password</Label>
-                    <Input
-                      id="signup-password"
-                      type="password"
-                      placeholder="••••••••"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                      minLength={8}
-                    />
-                  </div>
-                  <Button type="submit" className="w-full" disabled={loading}>
-                    {loading ? "Creating account..." : "Sign Up"}
-                  </Button>
-                </form>
-              </TabsContent>
-            </Tabs>
-
-            <Alert className="mt-4 bg-primary/10 border-primary/20">
-              <AlertCircle className="h-4 w-4 text-primary" />
-              <AlertDescription className="text-sm text-foreground">
-                <strong>Default Admin:</strong><br />
-                Email: alphonsarckal9502@gmail.com<br />
-                Password: 12345678
-              </AlertDescription>
-            </Alert>
-          </CardContent>
-        </Card>
+                <Alert className="mt-4 bg-primary/10 border-primary/20">
+                  <AlertCircle className="h-4 w-4 text-primary" />
+                  <AlertDescription className="text-sm text-foreground">
+                    <strong>Default Admin:</strong><br />
+                    Email: alphonsarckal9502@gmail.com<br />
+                    Password: 12345678
+                  </AlertDescription>
+                </Alert>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
