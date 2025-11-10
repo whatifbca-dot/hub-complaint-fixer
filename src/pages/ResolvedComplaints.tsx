@@ -27,7 +27,7 @@ export default function ResolvedComplaints() {
         .from("complaints")
         .select(`
           *,
-          profiles!complaints_user_id_fkey (
+          profiles (
             full_name,
             roll_number
           )

@@ -65,7 +65,7 @@ export default function AdminDashboard() {
         .from("complaints")
         .select(`
           *,
-          profiles!complaints_user_id_fkey (
+          profiles (
             full_name,
             email,
             roll_number
