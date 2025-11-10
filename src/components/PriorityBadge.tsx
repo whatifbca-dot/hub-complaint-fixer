@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import { ComplaintPriority } from "@/lib/supabase";
+import { ComplaintPriority } from "@/lib/types";
 
 interface PriorityBadgeProps {
   priority: ComplaintPriority;

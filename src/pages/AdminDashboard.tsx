@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase, Complaint, ComplaintStatus } from "@/lib/supabase";
+import { supabase } from "@/integrations/supabase/client";
+import { Complaint, ComplaintStatus } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
@@ -63,7 +64,7 @@ export default function AdminDashboard() {
         .from("complaints")
         .select(`
           *,
-          profiles (
+          profiles!complaints_user_id_fkey (
             full_name,
             email,
             roll_number
@@ -72,8 +73,8 @@ export default function AdminDashboard() {
         .order("created_at", { ascending: false });
 
       if (error) throw error;
-      setComplaints(complaintsData || []);
-      setFilteredComplaints(complaintsData || []);
+      setComplaints(complaintsData as any || []);
+      setFilteredComplaints(complaintsData as any || []);
     } catch (error: any) {
       toast({
         title: "Error",

@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import { ComplaintStatus } from "@/lib/supabase";
+import { ComplaintStatus } from "@/lib/types";
 import { Clock, AlertCircle, CheckCircle } from "lucide-react";
 
 interface StatusBadgeProps {

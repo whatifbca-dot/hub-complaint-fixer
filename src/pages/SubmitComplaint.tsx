@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { supabase, ComplaintCategory, ComplaintPriority } from "@/lib/supabase";
+import { supabase } from "@/integrations/supabase/client";
+import { ComplaintCategory, ComplaintPriority } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

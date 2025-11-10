@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { supabase, Complaint } from "@/lib/supabase";
+import { supabase } from "@/integrations/supabase/client";
+import { Complaint } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
@@ -26,7 +27,7 @@ export default function ResolvedComplaints() {
         .from("complaints")
         .select(`
           *,
-          profiles (
+          profiles!complaints_user_id_fkey (
             full_name,
             roll_number
           )
@@ -35,7 +36,7 @@ export default function ResolvedComplaints() {
         .order("resolved_at", { ascending: false });
 
       if (error) throw error;
-      setComplaints(complaintsData || []);
+      setComplaints(complaintsData as any || []);
     } catch (error: any) {
       toast({
         title: "Error",
