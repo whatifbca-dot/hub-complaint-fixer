@@ -48,10 +48,10 @@ export default function AdminSignup() {
       if (authError) throw authError;
 
       if (authData.user) {
-        // Manually insert admin role since the trigger assigns 'student' by default
-        const { error: roleError } = await supabase
-          .from("user_roles")
-          .insert({ user_id: authData.user.id, role: "admin" });
+        // Use security definer function to assign admin role
+        const { error: roleError } = await supabase.rpc("create_admin_role", {
+          target_user_id: authData.user.id,
+        });
 
         if (roleError) throw roleError;
 

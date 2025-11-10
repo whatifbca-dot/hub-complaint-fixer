@@ -115,6 +115,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      create_admin_role: {
+        Args: { target_user_id: string }
+        Returns: undefined
+      }
       generate_complaint_id: { Args: never; Returns: string }
       get_user_role: {
         Args: { _user_id: string }
