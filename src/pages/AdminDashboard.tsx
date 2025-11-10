@@ -47,14 +47,15 @@ export default function AdminDashboard() {
 
       setUser(session.user);
 
-      // Check if user is admin
+      // Check if user has admin role
       const { data: roleData } = await supabase
         .from("user_roles")
         .select("role")
-        .eq("user_id", session.user.id)
-        .single();
+        .eq("user_id", session.user.id);
 
-      if (roleData?.role !== "admin") {
+      const hasAdminRole = roleData?.some(r => r.role === "admin");
+      
+      if (!hasAdminRole) {
         navigate("/student-dashboard");
         return;
       }
