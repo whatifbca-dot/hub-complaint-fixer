@@ -43,20 +43,22 @@ export default function Auth() {
 
       if (error) throw error;
 
-      // Check user role
+      // Check user roles (user might have multiple roles)
       const { data: roleData } = await supabase
         .from("user_roles")
         .select("role")
-        .eq("user_id", data.user.id)
-        .single();
+        .eq("user_id", data.user.id);
 
       toast({
         title: "Welcome back!",
         description: "Login successful.",
       });
 
+      // Check if user has admin role (prioritize admin over student)
+      const hasAdminRole = roleData?.some(r => r.role === "admin");
+      
       // Navigate based on role
-      if (roleData?.role === "admin") {
+      if (hasAdminRole) {
         navigate("/admin-dashboard");
       } else {
         navigate("/student-dashboard");
