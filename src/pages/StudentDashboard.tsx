@@ -7,16 +7,21 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useToast } from "@/hooks/use-toast";
 import { StatusBadge } from "@/components/StatusBadge";
 import { PriorityBadge } from "@/components/PriorityBadge";
-import { Building2, LogOut, Plus, FileText, CheckCircle2 } from "lucide-react";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { Building2, LogOut, Plus, FileText, CheckCircle2, Moon, Sun, Trash2 } from "lucide-react";
 import { format } from "date-fns";
+import { useTheme } from "next-themes";
 
 export default function StudentDashboard() {
   const [user, setUser] = useState<any>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [complaints, setComplaints] = useState<Complaint[]>([]);
   const [loading, setLoading] = useState(true);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [complaintToDelete, setComplaintToDelete] = useState<string | null>(null);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     checkUser();
@@ -66,6 +71,39 @@ export default function StudentDashboard() {
     navigate("/auth");
   };
 
+  const handleDeleteComplaint = async () => {
+    if (!complaintToDelete) return;
+
+    try {
+      const { error } = await supabase
+        .from("complaints")
+        .delete()
+        .eq("id", complaintToDelete);
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Complaint deleted successfully",
+      });
+
+      setDeleteDialogOpen(false);
+      setComplaintToDelete(null);
+      checkUser();
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  };
+
+  const openDeleteDialog = (complaintId: string) => {
+    setComplaintToDelete(complaintId);
+    setDeleteDialogOpen(true);
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -93,6 +131,15 @@ export default function StudentDashboard() {
               <p className="text-sm font-medium text-foreground">{profile?.full_name}</p>
               <p className="text-xs text-muted-foreground">{profile?.roll_number}</p>
             </div>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            >
+              <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+              <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+              <span className="sr-only">Toggle theme</span>
+            </Button>
             <Button variant="outline" onClick={handleLogout}>
               <LogOut className="h-4 w-4 mr-2" />
               Logout
@@ -185,12 +232,43 @@ export default function StudentDashboard() {
                       </div>
                     )}
                   </div>
+                  {complaint.status === "Pending" && (
+                    <div className="mt-4 pt-4 border-t">
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openDeleteDialog(complaint.id);
+                        }}
+                      >
+                        <Trash2 className="h-4 w-4 mr-2" />
+                        Delete Complaint
+                      </Button>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             ))}
           </div>
         )}
       </main>
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete your complaint.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDeleteComplaint}>Delete</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
