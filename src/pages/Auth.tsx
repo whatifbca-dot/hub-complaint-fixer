@@ -119,7 +119,7 @@ export default function Auth() {
           <div className="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-2xl mb-4">
             <Building2 className="w-8 h-8 text-primary-foreground" />
           </div>
-          <h1 className="text-3xl font-bold text-foreground mb-2">Software Hub</h1>
+          <h1 className="text-3xl font-bold text-foreground mb-2">Brototype</h1>
           <p className="text-muted-foreground">Complaint Portal</p>
         </div>
 

@@ -66,7 +66,7 @@ export default function ResolvedComplaints() {
               <CheckCircle2 className="w-6 h-6 text-success-foreground" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-foreground">Software Hub</h1>
+              <h1 className="text-xl font-bold text-foreground">Brototype</h1>
               <p className="text-sm text-muted-foreground">Resolved Complaints</p>
             </div>
           </div>

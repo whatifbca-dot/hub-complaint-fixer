@@ -122,7 +122,7 @@ export default function StudentDashboard() {
               <Building2 className="w-6 h-6 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-foreground">Software Hub</h1>
+              <h1 className="text-xl font-bold text-foreground">Brototype</h1>
               <p className="text-sm text-muted-foreground">Student Dashboard</p>
             </div>
           </div>

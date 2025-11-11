@@ -10,8 +10,9 @@ const Index = () => {
           <div className="inline-flex items-center justify-center w-20 h-20 bg-primary rounded-2xl mb-6">
             <Building2 className="w-10 h-10 text-primary-foreground" />
           </div>
-          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">Brototype 
-Complaint Portal<span className="block text-primary mt-2">Complaint Portal</span>
+          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
+            Brototype
+            <span className="block text-2xl md:text-3xl text-muted-foreground mt-2 font-normal">Complaint Hub</span>
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             A transparent and efficient system for students to submit complaints and for administrators to manage them effectively.
@@ -103,7 +104,7 @@ Complaint Portal<span className="block text-primary mt-2">Complaint Portal</span
           <CardContent className="py-12 text-center">
             <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
             <p className="text-lg mb-6 text-primary-foreground/90">
-              Join our platform and help make the Software Hub a better place
+              Join our platform and help make Brototype a better place
             </p>
             <Button size="lg" variant="secondary" asChild className="text-lg px-8">
               <Link to="/auth">Sign Up Now</Link>
@@ -116,7 +117,7 @@ Complaint Portal<span className="block text-primary mt-2">Complaint Portal</span
       <footer className="border-t bg-card mt-16">
         <div className="container mx-auto px-4 py-8 text-center">
           <p className="text-muted-foreground">
-            © 2025 Software Hub Complaint Portal. All rights reserved.
+            © 2025 Brototype Complaint Portal. All rights reserved.
           </p>
         </div>
       </footer>
