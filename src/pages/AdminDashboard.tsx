@@ -10,7 +10,8 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { useToast } from "@/hooks/use-toast";
 import { StatusBadge } from "@/components/StatusBadge";
 import { PriorityBadge } from "@/components/PriorityBadge";
-import { Building2, LogOut, Filter, Moon, Sun } from "lucide-react";
+import { Building2, LogOut, Filter, Moon, Sun, Trash2 } from "lucide-react";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { format } from "date-fns";
 import { useTheme } from "next-themes";
 
@@ -23,6 +24,7 @@ export default function AdminDashboard() {
   const [newStatus, setNewStatus] = useState<ComplaintStatus>("Pending");
   const [filterStatus, setFilterStatus] = useState<string>("all");
   const [loading, setLoading] = useState(true);
+  const [complaintToDelete, setComplaintToDelete] = useState<Complaint | null>(null);
   const navigate = useNavigate();
   const { toast } = useToast();
   const { theme, setTheme } = useTheme();
@@ -131,6 +133,33 @@ export default function AdminDashboard() {
     setAdminReply(complaint.admin_reply || "");
   };
 
+  const handleDeleteComplaint = async () => {
+    if (!complaintToDelete) return;
+
+    try {
+      const { error } = await supabase
+        .from("complaints")
+        .delete()
+        .eq("id", complaintToDelete.id);
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Complaint deleted successfully",
+      });
+
+      setComplaintToDelete(null);
+      checkAdmin();
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -225,11 +254,10 @@ export default function AdminDashboard() {
         {/* Complaints List */}
         <div className="grid gap-4">
           {filteredComplaints.map((complaint) => (
-            <Card key={complaint.id} className="hover:shadow-md transition-shadow cursor-pointer"
-              onClick={() => openComplaintDialog(complaint)}>
+            <Card key={complaint.id} className="hover:shadow-md transition-shadow">
               <CardHeader>
                 <div className="flex justify-between items-start">
-                  <div className="flex-1">
+                  <div className="flex-1 cursor-pointer" onClick={() => openComplaintDialog(complaint)}>
                     <div className="flex items-center gap-2 mb-2">
                       <CardTitle className="text-lg">{complaint.title}</CardTitle>
                     </div>
@@ -249,13 +277,26 @@ export default function AdminDashboard() {
                       </div>
                     </CardDescription>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 items-start">
                     <StatusBadge status={complaint.status} />
                     <PriorityBadge priority={complaint.priority} />
+                    {complaint.status === "Resolved" && (
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setComplaintToDelete(complaint);
+                        }}
+                        className="text-destructive hover:text-destructive"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    )}
                   </div>
                 </div>
               </CardHeader>
-              <CardContent>
+              <CardContent onClick={() => openComplaintDialog(complaint)} className="cursor-pointer">
                 <div className="space-y-2">
                   <div>
                     <span className="text-sm font-medium text-muted-foreground">Category: </span>
@@ -341,6 +382,29 @@ export default function AdminDashboard() {
           )}
         </DialogContent>
       </Dialog>
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={!!complaintToDelete} onOpenChange={() => setComplaintToDelete(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Resolved Complaint</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete this complaint? This action cannot be undone.
+              {complaintToDelete && (
+                <div className="mt-2 text-sm">
+                  <strong>Complaint ID:</strong> {complaintToDelete.complaint_id}
+                </div>
+              )}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDeleteComplaint} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
