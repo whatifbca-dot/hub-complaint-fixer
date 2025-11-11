@@ -10,8 +10,7 @@ const Index = () => {
           <div className="inline-flex items-center justify-center w-20 h-20 bg-primary rounded-2xl mb-6">
             <Building2 className="w-10 h-10 text-primary-foreground" />
           </div>
-          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">Brototype
-
+          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">Brototype 
 Complaint Portal<span className="block text-primary mt-2">Complaint Portal</span>
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
