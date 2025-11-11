@@ -2,19 +2,17 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Building2, FileText, Users, Shield, CheckCircle2 } from "lucide-react";
-
 const Index = () => {
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/5">
+  return <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/5">
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-20">
         <div className="text-center max-w-3xl mx-auto">
           <div className="inline-flex items-center justify-center w-20 h-20 bg-primary rounded-2xl mb-6">
             <Building2 className="w-10 h-10 text-primary-foreground" />
           </div>
-          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
-            Software Hub
-            <span className="block text-primary mt-2">Complaint Portal</span>
+          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">Brototype
+
+Complaint Portal<span className="block text-primary mt-2">Complaint Portal</span>
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             A transparent and efficient system for students to submit complaints and for administrators to manage them effectively.
@@ -92,13 +90,11 @@ const Index = () => {
           Complaint Categories
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 max-w-4xl mx-auto">
-          {["Technical", "Cleanliness", "Power/Network", "Infrastructure", "Staff-related"].map((category) => (
-            <Card key={category} className="text-center hover:shadow-lg transition-shadow">
+          {["Technical", "Cleanliness", "Power/Network", "Infrastructure", "Staff-related"].map(category => <Card key={category} className="text-center hover:shadow-lg transition-shadow">
               <CardContent className="pt-6">
                 <p className="font-medium text-foreground">{category}</p>
               </CardContent>
-            </Card>
-          ))}
+            </Card>)}
         </div>
       </section>
 
@@ -125,8 +121,6 @@ const Index = () => {
           </p>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
