@@ -66,14 +66,14 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 215 28% 10%;
-    --foreground: 210 40% 98%;
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
 
-    --card: 215 28% 12%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 5%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 215 28% 12%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 5%;
+    --popover-foreground: 0 0% 100%;
 
     --primary: 214 85% 55%;
     --primary-foreground: 0 0% 100%;
@@ -81,11 +81,11 @@ All colors MUST be HSL.
     --primary-light: 214 85% 65%;
     --primary-dark: 214 85% 45%;
 
-    --secondary: 215 28% 18%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 215 28% 18%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 70%;
 
     --accent: 214 85% 55%;
     --accent-foreground: 0 0% 100%;
@@ -99,25 +99,25 @@ All colors MUST be HSL.
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 100%;
 
-    --border: 215 28% 20%;
-    --input: 215 28% 20%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
     --ring: 214 85% 55%;
     
-    --status-pending: 215 20% 65%;
+    --status-pending: 0 0% 70%;
     --status-in-progress: 38 92% 50%;
     --status-resolved: 142 76% 45%;
     
-    --priority-low: 215 20% 65%;
+    --priority-low: 0 0% 70%;
     --priority-medium: 38 92% 50%;
     --priority-high: 0 84% 60%;
 
-    --sidebar-background: 215 28% 10%;
-    --sidebar-foreground: 210 40% 98%;
+    --sidebar-background: 0 0% 0%;
+    --sidebar-foreground: 0 0% 100%;
     --sidebar-primary: 214 85% 55%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 215 28% 18%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 215 28% 20%;
+    --sidebar-accent: 0 0% 10%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 15%;
     --sidebar-ring: 214 85% 55%;
   }
 }

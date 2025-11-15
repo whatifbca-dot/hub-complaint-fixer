@@ -7,14 +7,17 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useToast } from "@/hooks/use-toast";
 import { StatusBadge } from "@/components/StatusBadge";
 import { PriorityBadge } from "@/components/PriorityBadge";
-import { Building2, ArrowLeft, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, CheckCircle2, Moon, Sun } from "lucide-react";
 import { format } from "date-fns";
+import { BrandLogo } from "@/components/BrandLogo";
+import { useTheme } from "next-themes";
 
 export default function ResolvedComplaints() {
   const [complaints, setComplaints] = useState<Complaint[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     fetchResolvedComplaints();
@@ -62,20 +65,26 @@ export default function ResolvedComplaints() {
       <header className="border-b bg-card">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-success rounded-lg flex items-center justify-center">
-              <CheckCircle2 className="w-6 h-6 text-success-foreground" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-foreground">Brototype</h1>
-              <p className="text-sm text-muted-foreground">Resolved Complaints</p>
-            </div>
+            <BrandLogo size="sm" />
+            <span className="text-sm text-muted-foreground">Resolved Complaints</span>
           </div>
-          <Button variant="outline" asChild>
-            <Link to="/student-dashboard">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back
-            </Link>
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            >
+              <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+              <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+              <span className="sr-only">Toggle theme</span>
+            </Button>
+            <Button variant="outline" asChild>
+              <Link to="/student-dashboard">
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Back
+              </Link>
+            </Button>
+          </div>
         </div>
       </header>
 
