@@ -12,7 +12,7 @@ export const BrandLogo = ({ size = "md", className = "" }: BrandLogoProps) => {
 
   return (
     <div className={`font-bold ${sizes[size]} ${className}`}>
-      <span className="bg-foreground text-background px-2 py-1">BRO</span>
+      <span className="bg-foreground text-background px-2 py-1 rounded">BRO</span>
       <span className="text-foreground">TOTYPE</span>
     </div>
   );
