@@ -1,19 +1,33 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Building2, FileText, Users, Shield, CheckCircle2 } from "lucide-react";
+import { FileText, Users, Shield, CheckCircle2, Moon, Sun } from "lucide-react";
+import { BrandLogo } from "@/components/BrandLogo";
+import { useTheme } from "next-themes";
 const Index = () => {
+  const { theme, setTheme } = useTheme();
+
   return <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/5">
+      {/* Theme Toggle */}
+      <div className="fixed top-4 right-4 z-50">
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+        >
+          <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+          <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          <span className="sr-only">Toggle theme</span>
+        </Button>
+      </div>
+
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-20">
         <div className="text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-primary rounded-2xl mb-6">
-            <Building2 className="w-10 h-10 text-primary-foreground" />
+          <div className="mb-8">
+            <BrandLogo size="lg" className="inline-block" />
           </div>
-          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
-            Brototype
-            <span className="block text-2xl md:text-3xl text-muted-foreground mt-2 font-normal">Complaint Hub</span>
-          </h1>
+          <p className="text-2xl md:text-3xl text-muted-foreground font-normal mb-6">Complaint Hub</p>
           <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             A transparent and efficient system for students to submit complaints and for administrators to manage them effectively.
           </p>
